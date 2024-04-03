@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, Fragment, useRef } from "react";
 import Button from "../UI/Button";
 import Card from "../UI/Card";
 import styles from "./CreateUser.module.css";
 import ErrorModal from "../UI/ErrorModal";
 
 const CreateUser = ({ onCreateUser }) => {
+  const nameInputRef = useRef();
+  const ageInputRef = useRef();
+
+
   const [inputName, setInputName] = useState("");
   const [inputAge, setInputAge] = useState("");
   const [error, setError] = useState();
@@ -20,7 +24,7 @@ const CreateUser = ({ onCreateUser }) => {
       return;
     }
 
-    if (+inputAge < 0) {
+    if (+inputAge < 1) {
       setError({
         title: "Incorrect age",
         message: "Age must be greater than 0",
@@ -46,7 +50,7 @@ const CreateUser = ({ onCreateUser }) => {
   }
 
   return (
-    <div>
+    <Fragment>
       {error && <ErrorModal title={error.title} message={error.message} onCloseModal={closeModalHandler}/>}
       <Card className={styles.input}>
         <form onSubmit={createUserHandler}>
@@ -67,7 +71,7 @@ const CreateUser = ({ onCreateUser }) => {
           <Button type="submit">Add User</Button>
         </form>
       </Card>
-    </div>
+    </Fragment>
   );
 };
 
